@@ -10,7 +10,7 @@ MELO provides an online computation service, a Linux version Python package, and
 Before installing MELO, you need to install DSSP (Dictionary of Secondary Structure of Proteins). You can follow the DSSP installation instructions.
 To install MELO, simply use pip:
 ```
-pip install melo
+pip install melopro
 ```
 ## Usage
 Once MELO is installed, you can use it by running the **test.py** script.
