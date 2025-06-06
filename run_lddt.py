@@ -8,7 +8,7 @@ def color_structure_by_mean_rmsd(pdb_file, mean_rmsd_list, aligned_seq, chain_id
     parser = PDBParser(QUIET=True)
     structure = parser.get_structure("model", pdb_file)
 
-    i = 0  # 对齐位置的索引
+    i = 0  
     for model in structure:
         for chain in model:
             if chain.id in chain_ids:
@@ -16,7 +16,6 @@ def color_structure_by_mean_rmsd(pdb_file, mean_rmsd_list, aligned_seq, chain_id
                     if not is_aa(residue):
                          continue
                     # print(residue)
-                    # 跳过 gap
                     while i < len(mean_rmsd_list) and pd.isna(aligned_seq[i]):
                         i += 1
                         # print(i)
@@ -39,14 +38,14 @@ aligned_seq2_list = LDDT['ref_res'].tolist()
 color_structure_by_mean_rmsd(
     pdb_file="/mnt/h/MELO/NC/low_sequence_similar/6HZM.pdb",
     mean_rmsd_list=lddt_v,
-    aligned_seq=aligned_seq1_list,  # 一定要传对齐序列
+    aligned_seq=aligned_seq1_list,  
     chain_ids=["A"],
     output_pdb="/mnt/h/MELO/NC/review2/residue/DRMSD/PDB/6HZM_colored_LDDT.pdb",
 )
 color_structure_by_mean_rmsd(
     pdb_file="/mnt/h/MELO/NC/low_sequence_similar/6VXH.pdb",
     mean_rmsd_list=lddt_v,
-    aligned_seq=aligned_seq2_list,  # 一定要传对齐序列
+    aligned_seq=aligned_seq2_list, 
     chain_ids=["A"],
     output_pdb="/mnt/h/MELO/NC/review2/residue/DRMSD/PDB/6VXH_colored_LDDT.pdb",
 )
