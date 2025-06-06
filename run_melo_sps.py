@@ -27,7 +27,7 @@ def color_structure_by_mean_rmsd(pdb_file, mean_rmsd_list, aligned_seq, chain_id
     parser = PDBParser(QUIET=True)
     structure = parser.get_structure("model", pdb_file)
 
-    i = 0  # 对齐位置的索引
+    i = 0  
     for model in structure:
         for chain in model:
             if chain.id in chain_ids:
@@ -48,33 +48,33 @@ def color_structure_by_mean_rmsd(pdb_file, mean_rmsd_list, aligned_seq, chain_id
     io.set_structure(structure)
     io.save(output_pdb)
 
-# 只保留数值部分（去掉序列）
+
 d_rmsd_values = d_rmsd.iloc[:, 2:]
 
-# 设定窗口范围，例如 j=10 到 k=20
+
 j = 200
 k = 280
 
-# 计算平均值（行方向上）——即每个残基与第 j 到 k 个残基之间的 dRMSD 平均
+
 mean_rmsd = d_rmsd_values.iloc[:, j:k+1].mean(axis=1)
 
-# 添加到原 dataframe 里
+
 d_rmsd["mean_rmsd"] = mean_rmsd
-# 标准化并转 list（跳过 None）
+
 normalized_rmsd = pd.Series(mean_rmsd) / pd.Series(mean_rmsd).max()
 normalized_rmsd = normalized_rmsd.fillna(0).tolist()
 
 color_structure_by_mean_rmsd(
     pdb_file="/mnt/h/MELO/NC/low_sequence_similar/6A6N.pdb",
     mean_rmsd_list=normalized_rmsd,
-    aligned_seq=aligned_seq2_list,  # 一定要传对齐序列
+    aligned_seq=aligned_seq2_list,  
     chain_ids=["A", "B"],
     output_pdb="/mnt/h/MELO/NC/review2/residue/DRMSD/PDB/6A6N_colored_A2.pdb"
 )
 color_structure_by_mean_rmsd(
     pdb_file="/mnt/h/MELO/NC/low_sequence_similar/6A6M_ZZ.pdb",
     mean_rmsd_list=normalized_rmsd,
-    aligned_seq=aligned_seq1_list,  # 一定要传对齐序列
+    aligned_seq=aligned_seq1_list,  
     chain_ids=["A", "C"],
     output_pdb="/mnt/h/MELO/NC/review2/residue/DRMSD/PDB/6A6M_colored_A2.pdb"
 )
@@ -86,5 +86,5 @@ color_structure_by_mean_rmsd(
 # set_color target,[243, 207, 71]
 # spectrum b, no_p2, 6A6M_colored_A1, minimum=0, maximum=100
 # spectrum b, no_p1, 6A6N_colored_A1, minimum=0, maximum=100
-# color target,sele 选择的氨基酸
+# color target,sele 
 # set cartoon_transparency,0.8,sele
