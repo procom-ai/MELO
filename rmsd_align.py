@@ -2,10 +2,10 @@ from Bio.PDB import PDBParser, PDBIO
 import numpy as np
 import pandas as pd
 from Bio.PDB.Polypeptide import is_aa
-# ========== 主流程 ==========
+# ========== pipeline ==========
 #/mnt/e/topic/mutant_protein_structure/TMalign 1KH0.pdb 1PGB.pdb > 1KH0_1PGB.txt
 #PYMOL  STEP 1: cmd.show_as("cartoon"   ,"all") 
-# STEP 2:改颜色：set_color p1,[200, 0, 0]
+# STEP 2:set_color p1,[200, 0, 0]
 # spectrum b, white_p1, 6A6N_colored_A1, minimum=0, maximum=100
 #set_color p2,[51, 51, 204] 
 # spectrum b, white_p2, 6A6M_colored_A1, minimum=0, maximum=100
@@ -32,7 +32,7 @@ def extract_aligned_sequences_blocks(tm_align_output_file):
             i += 3
         else:
             i += 1
-    return blocks  # 每个 block 是 (seq1, seq2, match)
+    return blocks  
 
 def parse_structure_ca_coords(pdb_file, chain_id):
     parser = PDBParser(QUIET=True)
@@ -98,8 +98,7 @@ def color_structure_by_rmsd(pdb_file, rmsd_df, chain_ids, output_pdb, proteinid)
 
 blocks = extract_aligned_sequences_blocks(tm_output)
 
-# 手动处理 block 对应关系：
-# 假设第一个是链A对应A，第二个是链C对应B
+
 seq1_A, seq2_A, _ = blocks[0]
 # seq1_B, seq2_B, _ = blocks[0]
 
@@ -117,7 +116,7 @@ df = pd.DataFrame(rmsd_A)
 # print(df)
 df.to_csv("/mnt/h/MELO/NC/review2/residue/7OXW_6HKR.csv", index=False)
 
-# 上色
+
 color_structure_by_rmsd(
     pdb_file=pdb_file2,
     rmsd_df=df,
