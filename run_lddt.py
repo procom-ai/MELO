@@ -21,7 +21,6 @@ def color_structure_by_mean_rmsd(pdb_file, mean_rmsd_list, aligned_seq, chain_id
                         # print(i)
                     if i >= len(mean_rmsd_list):
                         break
-                    # 设置 bfactor
                     value = mean_rmsd_list[i]
                     print(i,residue,value,len(mean_rmsd_list))
                     if value is not None:
