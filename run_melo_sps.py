@@ -2,7 +2,7 @@ from muliti_chain_score import *
 import os
 from Bio.PDB import PDBParser, PDBIO
 import pandas as pd
-pdb_name1 = f'6A6M_ZZ'
+pdb_name1 = f'6A6M'
 pdb_name2 = f'6A6N'
 # pdb_file1 = os.path.join('/mnt/h/MELO/NC/low_sequence_similar', f"{pdb_name1}.pdb")
 # pdb_file2 = os.path.join('/mnt/h/MELO/NC/low_sequence_similar', f"{pdb_name2}.pdb")
@@ -32,12 +32,10 @@ def color_structure_by_mean_rmsd(pdb_file, mean_rmsd_list, aligned_seq, chain_id
         for chain in model:
             if chain.id in chain_ids:
                 for residue in chain:
-                    # 跳过 gap
                     while i < len(mean_rmsd_list) and aligned_seq[i] == '-':
                         i += 1
                     if i >= len(mean_rmsd_list):
                         break
-                    # 设置 bfactor
                     value = mean_rmsd_list[i]
                     if value is not None:
                         for atom in residue:
